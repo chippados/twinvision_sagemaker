@@ -6,7 +6,7 @@ sagemaker_session = sagemaker.Session()
 role = sagemaker.get_execution_role()
 
 # Caminho para os dados no S3
-data_path = 's3://seu-bucket/caminho-para-dados/'  # Substitua pelo seu bucket S3
+data_path = 's3://modelos-challenge/modelo_final_v2/dados/'  # Substitua pelo seu bucket S3
 
 # Criar um estimador TensorFlow
 estimator = TensorFlow(
