@@ -10,7 +10,7 @@ data_path = 's3://seu-bucket/caminho-para-dados/'  # Substitua pelo seu bucket S
 
 # Criar um estimador TensorFlow
 estimator = TensorFlow(
-    entry_point='train.py',
+    entry_point='train_dsnu.py',
     source_dir='.',
     role=role,
     instance_count=1,
