@@ -25,6 +25,5 @@ estimator = TensorFlow(
 )
 
 # Iniciar o trabalho de treinamento
-estimator.fit({'training': data_path})
-
-print("Treinamento finalizado!")
+estimator.fit({'training': data_path}, wait=False, logs='All')
+print("Job de treinamento iniciado. Verifique o status no console do SageMaker.")
