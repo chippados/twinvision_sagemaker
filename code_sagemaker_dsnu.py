@@ -5,8 +5,10 @@ from sagemaker.tensorflow import TensorFlow
 sagemaker_session = sagemaker.Session()
 role = sagemaker.get_execution_role()
 
-# Caminho para os dados no S3
+
+
 data_path = 's3://modelos-challenge/modelo_final_v2/dados/'  # Substitua pelo seu bucket S3
+
 
 # Criar um estimador TensorFlow
 estimator = TensorFlow(
@@ -25,5 +27,5 @@ estimator = TensorFlow(
 )
 
 # Iniciar o trabalho de treinamento
-estimator.fit({'training': data_path}, wait=False, logs='All')
+estimator.fit({'training': data_path}, wait=True, logs='All')
 print("Job de treinamento iniciado. Verifique o status no console do SageMaker.")

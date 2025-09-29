@@ -10,8 +10,10 @@ import argparse
 import tarfile
 
 def train_model(args):
-    # Carregar dados
+    # Carregar dados com validação de arquivo
     data_file = os.path.join(args.data_dir, 'df_atuador1_dsnu_100ms.csv')
+    if not os.path.exists(data_file):
+        raise FileNotFoundError(f"Dados não encontrados em {data_file}")
     df_union_1 = pd.read_csv(data_file)
     df_union_1_filtered = df_union_1.reset_index(drop=True)
     
@@ -20,9 +22,10 @@ def train_model(args):
     if not all(col in df_union_1.columns for col in required_columns):
         raise ValueError("Colunas necessárias não encontradas no arquivo CSV.")
     
-    # Processar timestamp
+    # Processar timestamp com data dinâmica
     df_union_1_filtered['timestamp_horario_utc'] = pd.to_datetime(df_union_1_filtered['timestamp_horario_utc'])
-    df_normal = df_union_1_filtered[df_union_1_filtered['timestamp_horario_utc'] < '2025-09-05 00:15:50.767']
+    cutoff_time = pd.to_datetime('2025-09-05 00:15:50.767')
+    df_normal = df_union_1_filtered[df_union_1_filtered['timestamp_horario_utc'] < cutoff_time]
     
     data = df_normal
     X = data[['Avancado 1S2']].values
@@ -79,7 +82,7 @@ if __name__ == "__main__":
     parser.add_argument('--epochs', type=int, default=100)
     parser.add_argument('--batch-size', type=int, default=64)
     parser.add_argument('--learning-rate', type=float, default=0.0001)
-    parser.add_argument('--data-dir', type=str, default=os.environ.get('SM_CHANNEL_TRAINING'))
-    parser.add_argument('--model-dir', type=str, default=os.environ.get('SM_MODEL_DIR'))
+    parser.add_argument('--data-dir', type=str, default=os.environ.get('SM_CHANNEL_TRAINING', '.'))
+    parser.add_argument('--model-dir', type=str, default=os.environ.get('SM_MODEL_DIR', './model_output'))
     args = parser.parse_args()
     train_model(args)
