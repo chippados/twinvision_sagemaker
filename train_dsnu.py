@@ -79,10 +79,5 @@ def train_model(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--epochs', type=int, default=100)
-    parser.add_argument('--batch-size', type=int, default=64)
-    parser.add_argument('--learning-rate', type=float, default=0.0001)
-    parser.add_argument('--data-dir', type=str, default=os.environ.get('SM_CHANNEL_TRAINING', '.'))
-    parser.add_argument('--model-dir', type=str, default=os.environ.get('SM_MODEL_DIR', './model_output'))
     args = parser.parse_args()
     train_model(args)
