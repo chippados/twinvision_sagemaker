@@ -19,10 +19,10 @@ hyperparameters={
 # Criar um estimador TensorFlow
 estimator = TensorFlow(
     entry_point='train_dsnu.py',
-    source_dir='.',
+    source_dir='./',
     role=role,  # Adicionado o role aqui
     instance_count=1,
-    instance_type='ml.t3.medium',
+    instance_type='ml.p2.xlarge',
     framework_version='2.9.1',
     py_version='py39',
     hyperparameters=hyperparameters,
