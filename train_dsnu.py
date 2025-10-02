@@ -69,8 +69,8 @@ def train_model(args):
         ]
     )
 
-# Compile the model
-model.compile(optimizer=Adam(learning_rate=0.0001), loss='mean_squared_error')
+    # Compile the model
+    model.compile(optimizer=Adam(learning_rate=0.0001), loss='mean_squared_error')
     
     # Compilar e treinar
     model.compile(optimizer=Adam(learning_rate=args.learning_rate), loss='mean_squared_error')
