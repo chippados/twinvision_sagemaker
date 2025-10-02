@@ -6,13 +6,12 @@ sagemaker_session = sagemaker.Session()
 role = sagemaker.get_execution_role()
 
 tensorflow_estimator = TensorFlow(
-                        entry_point              = 'train_dsnu_2.py',
+                        entry_point              = 'train_dsnu.py',
                         source_dir               = './',
                         role                     = role,
                         instance_count           = 1,
                         instance_type            = 'ml.m5.large',
                         framework_version        ='2.11.0',
-                        outputh_path             = 's3://modelos-challenge/modelo_final_v2/modelo_sage/',
                         py_version               = 'py39',
                         hyperparameters          = {'epochs'       : 100,
                                                     'batch_size'   : 64,
