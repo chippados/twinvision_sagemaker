@@ -85,9 +85,5 @@ def train():
     model_dir = os.path.join(args.model_dir, '1')
     model.save(model_dir)
 
-    # Criar arquivo tar.gz
-    with tarfile.open(os.path.join(args.model_dir, 'model.tar.gz'), 'w:gz') as tar:
-        tar.add(model_dir, arcname='1')
-
 if __name__ == '__main__':
     train()
