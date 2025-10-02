@@ -57,13 +57,20 @@ def train_model(args):
     X_train, X_test, y_train, y_test = train_test_split(X_data, y_data, test_size=0.2, shuffle=False)
 
     # Criar modelo
-    model = Sequential()
-    model.add(Conv1D(filters=512, kernel_size=5, activation='relu', input_shape=(time_steps, 1)))
-    model.add(Conv1D(filters=256, kernel_size=5, activation='relu'))
-    model.add(MaxPooling1D(pool_size=2))
-    model.add(Flatten())
-    model.add(Dense(16, activation='relu'))
-    model.add(Dense(1))
+# Criar modelo usando a API do Keras
+    model = Sequential(
+        [
+            Conv1D(filters=512, kernel_size=5, activation='relu', input_shape=(time_steps, 1)),
+            Conv1D(filters=256, kernel_size=5, activation='relu'),
+            MaxPooling1D(pool_size=2),
+            Flatten(),
+            Dense(16, activation='relu'),
+            Dense(1)
+        ]
+    )
+
+# Compile the model
+model.compile(optimizer=Adam(learning_rate=0.0001), loss='mean_squared_error')
     
     # Compilar e treinar
     model.compile(optimizer=Adam(learning_rate=args.learning_rate), loss='mean_squared_error')
