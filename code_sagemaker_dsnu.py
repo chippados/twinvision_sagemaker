@@ -5,32 +5,19 @@ from sagemaker.tensorflow import TensorFlow, TrainingCompilerConfig
 sagemaker_session = sagemaker.Session()
 role = sagemaker.get_execution_role()
 
-
-
-data_path = 's3://modelos-challenge/modelo_final_v2/dados/'  # Substitua pelo seu bucket S3
-
-
-hyperparameters={
-    "n_gpus": 1,
-    "batch_size": 64,
-    "learning_rate": 0.0001
-}
-
-# Criar um estimador TensorFlow
-estimator = TensorFlow(
-    entry_point='train_dsnu.py',
-    source_dir='./',
-    role=role,  # Adicionado o role aqui
-    instance_count=1,
-    instance_type='ml.p2.xlarge',
-    framework_version='2.9.1',
-    py_version='py39',
-    hyperparameters=hyperparameters,
-    compiler_config=TrainingCompilerConfig(),
-    disable_profiler=True,
-    debugger_hook_config=False
+tensorflow_estimator = TensorFlow(
+                        entry_point              = 'train_dsnu.py',
+                        source_dir               = './',
+                        role                     = role,
+                        instance_count           = 1,
+                        instance_type            = 'ml.p2.xlarge',
+                        framework_version        ='2.19.0',
+                        outputh_path             = 's3://modelos-challenge/modelo_final_v2/modelo_sage/',
+                        py_version               = 'py39',
+                        hyperparameters          = {'epochs'       : 100,
+                                                    'batch_size'   : 64,
+                                                    'learning_rate': 0.0001},
+                        enable_sagemaker_metrics = True
 )
 
-# Iniciar o trabalho de treinamento
-estimator.fit({'training': data_path}, wait=True, logs='All')
-print("Job de treinamento iniciado. Verifique o status no console do SageMaker.")
+tensorflow_estimator.fit("s3://modelos-challenge/modelo_final_v2/dados/")
