@@ -22,7 +22,7 @@ def parse_args():
 def train():
     args = parse_args()
 
-    s3_path = os.path.join(args.data_dir, 'data.csv')  # Adjust filename as needed
+    s3_path = os.path.join(args.data_dir, 'df_atuador1_dsnu_100ms.csv')  # Adjust filename as needed
     df_union_1 = pd.read_csv(s3_path)
     df_union_1_filtered = df_union_1.reset_index(drop=True)
 
