@@ -83,7 +83,7 @@ def train():
 
     # Salvar o modelo
     model_dir = args.model_dir
-    model.save(model_dir)
+    model.save(model_dir, save_format='tf')
 
 if __name__ == '__main__':
     train()
