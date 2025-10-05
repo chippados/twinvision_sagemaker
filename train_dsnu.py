@@ -82,7 +82,7 @@ def train():
     )
 
     # Salvar o modelo
-    model_dir = os.path.join(args.model_dir, '1')
+    model_dir = args.model_dir
     model.save(model_dir)
 
 if __name__ == '__main__':
