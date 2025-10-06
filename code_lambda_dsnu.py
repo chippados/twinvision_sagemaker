@@ -32,6 +32,10 @@ def lambda_handler(event, context):
         df = pd.read_csv(csv_path)
         df_filtered = df.reset_index(drop=True)
 
+        # Filtra os dados anormais conforme o código fornecido
+        df_anormal = df_filtered[(df_filtered['timestamp_horario_utc'] > '2025-09-05 00:15:50.0') &
+                                (df_filtered['timestamp_horario_utc'] < '2025-09-05 00:16:50.767')]
+        
         # Prepara os dados
         data = df_anormal
         data['timestamp_unix'] = data['Avancado 1S2']
