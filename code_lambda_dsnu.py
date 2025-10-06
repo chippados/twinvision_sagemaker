@@ -21,18 +21,17 @@ def lambda_handler(event, context):
     
     try:
         # Extrai o CSV do evento (assumindo que é enviado como string base64 ou texto)
-        csv_data = event['body']
-        if event.get('isBase64Encoded', False):
-            csv_data = base64.b64decode(csv_data).decode('utf-8')
+        # csv_data = event['body']
+        # if event.get('isBase64Encoded', False):
+        #     csv_data = base64.b64decode(csv_data).decode('utf-8')
+        
+        # Caminho do arquivo CSV local no ambiente Lambda (ex.: incluído no ZIP)
+        csv_path = 'df_atuador1_dsnu_100ms.csv'  # Ajuste o nome do arquivo conforme necessário
         
         # Carrega o CSV em um DataFrame
-        df = pd.read_csv(io.StringIO(csv_data))
+        df = pd.read_csv(csv_path)
         df_filtered = df.reset_index(drop=True)
-        
-        # Filtra os dados anormais conforme o código fornecido
-        df_anormal = df_filtered[(df_filtered['timestamp_horario_utc'] > '2025-09-05 00:15:50.0') &
-                                (df_filtered['timestamp_horario_utc'] < '2025-09-05 00:16:50.767')]
-        
+
         # Prepara os dados
         data = df_anormal
         data['timestamp_unix'] = data['Avancado 1S2']
